@@ -1,18 +1,30 @@
 <template>
-  <h1 class="text-2xl text-center mb-10">Cadastro de pessoas</h1>
   <div class="container mx-auto">
-    <register-form />
+    <h1 class="text-2xl text-center mb-10">Cadastro de pessoas</h1>
+    <register-form @submit:new_register="saveData" />
+    <people-table :records="records" />
   </div>
-  
 </template>
 
 <script>
-import { BeakerIcon } from "@heroicons/vue/solid";
-import RegisterForm from './components/RegisterForm.vue';
-export default {
-  components: { BeakerIcon, RegisterForm },
-};
+import RegisterForm from "./components/RegisterForm.vue";
+import PeopleTable from "./components/PeopleTable.vue";
 
+export default {
+  components: { RegisterForm, PeopleTable },
+
+  data() {
+    return {
+      records: [],
+    }
+  },
+
+  methods: {
+    saveData(form) {
+      this.records.push(form);
+    },
+  },
+};
 </script>
 
 <style>

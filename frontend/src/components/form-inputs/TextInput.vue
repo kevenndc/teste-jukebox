@@ -5,6 +5,7 @@
       :name="name"
       :id="name"
       placeholder=" "
+      :required="required"
       v-mask="mask"
       @input="$emit(`update:${name}`, $event.target.value)"
       class="block w-full appearance-none focus:outline-none bg-transparent"
@@ -20,6 +21,7 @@ export default {
     props: {
         name: String,
         label: String,
+        required: Boolean,
         mask: String,
     },
 

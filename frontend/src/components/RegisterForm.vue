@@ -1,10 +1,16 @@
 <template>
-  <form action="" method="post" class="container">
-    <div class="grid grid-cols-2 gap-8">
+  <form
+    action=""
+    method="post"
+    class="container"
+    @submit="submitForm"
+  >
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
       <!-- Nome -->
       <text-input
         name="first_name"
         label="Nome"
+        :required="true"
         @update:first_name="setFirstName"
       />
       <!-- /Nome -->
@@ -13,12 +19,13 @@
       <text-input
         name="last_name"
         label="Sobrenome"
+        :required="true"
         @update:last_name="setLastName"
       />
       <!-- /Sobrenome -->
     </div>
 
-    <div class="grid grid-cols-2 gap-5 mt-8">
+    <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2">
       <!-- E-mail -->
       <email-input name="email" label="E-mail" @update:email="setEmail" />
       <!-- /E-mail -->
@@ -27,13 +34,14 @@
       <text-input
         name="phone"
         label="Telefone"
+        :required="true"
         mask="(##) #####-####"
         @update:phone="setPhone"
       />
       <!-- /Telefone -->
     </div>
 
-    <div class="grid grid-cols-2 gap-5 mt-8">
+    <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2">
       <!-- É pessoa jurídica -->
       <toggle-input
         name="legal_entity"
@@ -47,6 +55,7 @@
         v-if="!showCNPJ"
         name="cpf"
         label="CPF"
+        :required="true"
         mask="###.###.###-##"
         @update:phone="setCPF"
       />
@@ -57,6 +66,7 @@
         v-if="showCNPJ"
         name="cnpj"
         label="CNPJ"
+        :required="true"
         mask="##.###.###/####-##"
         @update:phone="setCNPJ"
       />
@@ -68,10 +78,13 @@
   </form>
 </template>
 <script>
+// Componentes
 import TextInput from "./form-inputs/TextInput.vue";
 import EmailInput from "./form-inputs/EmailInput.vue";
 import ToggleInput from "./form-inputs/ToggleInput.vue";
 import SubmitButton from "./SubmitButton.vue";
+
+import { axios } from 'axios';
 
 export default {
   components: {
@@ -86,6 +99,7 @@ export default {
       form: {
         firstName: "",
         lastName: "",
+        fullName: "",
         email: "",
         phone: "",
         isLegalEntity: false,
@@ -125,6 +139,11 @@ export default {
     setCPF(value) {
       this.form.cpf = value;
     },
+
+    submitForm(event) {
+      event.preventDefault();
+      this.$emit('submit:new_register', this.form);
+    }
   },
 
   computed: {
@@ -133,13 +152,18 @@ export default {
     },
 
     fullName() {
-      return `${this.form.firstName} ${this.form.lastName}`;
+      const fullName = `${this.form.firstName} ${this.form.lastName}`;
+      return fullName;
     },
   },
 
   watch: {
     isLegalEntity(val) {
       this.showCNPJ = val === "true";
+    },
+
+    fullName(val) {
+      this.form.fullName = val;
     },
   },
 };
