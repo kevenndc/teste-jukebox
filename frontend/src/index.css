@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:focus-within ~ label {
+    @apply transform scale-75 -translate-y-6 text-blue-500;
+}
+
+
+input:focus-within ~ label,
+input:not(:placeholder-shown) ~ label {
+  @apply transform scale-75 -translate-y-6;
+}
+
+input:focus-within ~ label {
+  @apply text-blue-500;
+}
+
+.toggle-input:checked ~ .dot {
+    @apply transform translate-x-full bg-blue-500;
+}
