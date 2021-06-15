@@ -22,6 +22,12 @@ import IndexTable from "./components/IndexTable.vue";
 import UpdateForm from "./components/UpdateForm.vue";
 import axios from "axios";
 
+
+// MUDE PARA TRUE PARA USAR A INTEGRAÇÃO COM O LARAVEL
+const useAPI = false;
+
+
+
 const http = axios.create({
   baseURL: "http://127.0.0.1:8000/",
   withCredentials: false,
@@ -31,8 +37,6 @@ const http = axios.create({
   },
 });
 
-// MUDE PARA TRUE PARA USAR A INTEGRAÇÃO COM O LARAVEL
-const useAPI = false;
 
 export default {
   components: { RegisterForm, IndexTable, UpdateForm },
