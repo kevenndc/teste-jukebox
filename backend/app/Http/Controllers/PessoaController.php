@@ -14,6 +14,13 @@ class PessoaController extends Controller
         return Pessoa::orderBy('created_at', 'desc')->get()->toJson();
     }
 
+    // retorna uma pessoa específica
+    public function show($id)
+    {
+        $pessoa = Pessoa::findOrFail($id);
+        return Pessoa::orderBy('created_at', 'desc')->get()->toJson();
+    }
+
     // salva uma nova pessoa e retorna todas as pessoas cadastradas
     public function store(StorePessoaRequest $request)
     {

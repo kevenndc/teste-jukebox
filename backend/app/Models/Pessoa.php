@@ -17,7 +17,7 @@ class Pessoa extends Model
         'telefone',
         'pessoa_juridica',
         'cpf',
-        'cnpj'
+        'cnpj',
     ];
 
     protected $hidden = [

@@ -6,7 +6,10 @@
 ### Vue.js
 
 A aplicação em Vue.js se encontra dentro da pasta ```frontend```.
-Para rodá-la, basta clona este repositório e rodas o comando ```npm install ``` dentro da pasta ```frontend```.
+Para rodá-la, siga os passos abaixo: 
+1. clone este repositório;
+2. Rode o comando ```npm install ``` dentro da pasta ```frontend``` para instalar as dependências;
+3. Rode o comando ```npm run dev``` para subir a aplicação no ambiente de desenvolvimento.
 
 #### Importante!
 O frontend inicialmente está salvando os dados em um ```Àrray```, porém, eu fiz a integração com a API desenvolvida em Laravel. Por isso, é possível habilitar a integração trocando o valor da variável ```useAPI``` para ```true``` na linha ```27``` do arquivo ```/src/App.vue```.
