@@ -13,7 +13,9 @@ module.exports = {
   },
   variants: {
     borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
-    extend: {},
+    extend: {
+      borderWidth: ['last'],
+    },
   },
   corePlugins: {
     container: false,

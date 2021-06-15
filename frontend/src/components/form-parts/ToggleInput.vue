@@ -9,11 +9,12 @@
         <input
           type="checkbox"
           class="sr-only toggle-input"
-          :value="value"
+          :checked="checked"
+          :value="checked"
           :name="name"
           :id="name"
-          v-model="value"
-          @change="$emit(`update:${name}`, $event.target.value)"
+          v-model="checked"
+          @change="$emit(`update:${name}`, $event.target.value == 'true')"
         />
         <!-- line -->
         <div class="block bg-gray-300 w-14 h-8 rounded-full"></div>
@@ -40,10 +41,11 @@ export default {
   props: {
     name: String,
     label: String,
+    value: Boolean,
   },
   data() {
     return {
-      value: "",
+      checked: this.value,
     };
   },
 };

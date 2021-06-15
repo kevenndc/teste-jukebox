@@ -1,14 +1,12 @@
 <template>
-  <form
-    class="container"
-    @submit.prevent="submitForm"
-  >
+  <form class="container" @submit.prevent="submitForm">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
       <!-- Nome -->
       <text-input
         name="first_name"
         label="Nome"
         :required="true"
+        :value="record.firstName"
         @update:first_name="setFirstName"
       />
       <!-- /Nome -->
@@ -18,6 +16,7 @@
         name="last_name"
         label="Sobrenome"
         :required="true"
+        :value="record.lastName"
         @update:last_name="setLastName"
       />
       <!-- /Sobrenome -->
@@ -25,7 +24,12 @@
 
     <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2">
       <!-- E-mail -->
-      <email-input name="email" label="E-mail" @update:email="setEmail" />
+      <email-input
+        name="email"
+        label="E-mail"
+        @update:email="setEmail"
+        :value="record.email"
+      />
       <!-- /E-mail -->
 
       <!-- Telefone -->
@@ -33,6 +37,7 @@
         name="phone"
         label="Telefone"
         :required="true"
+        :value="record.phone"
         mask="(##) #####-####"
         @update:phone="setPhone"
       />
@@ -44,6 +49,7 @@
       <toggle-input
         name="legal_entity"
         label="É Pessoa Jurídica?"
+        :value="record.isLegalEntity"
         @update:legal_entity="setIsLegalEntity"
       />
       <!-- /É pessoa jurídica? -->
@@ -54,8 +60,9 @@
         name="cpf"
         label="CPF"
         :required="true"
+        :value="record.cpf"
         mask="###.###.###-##"
-        @update:cpf="setCPF"
+        @update:phone="setCPF"
       />
       <!-- /CPF -->
 
@@ -65,13 +72,14 @@
         name="cnpj"
         label="CNPJ"
         :required="true"
+        :value="record.cnpj"
         mask="##.###.###/####-##"
-        @update:cnpj="setCNPJ"
+        @update:phone="setCNPJ"
       />
       <!-- CNPJ -->
     </div>
     <div class="text-right mt-10">
-      <submit-button text="Cadastrar pessoa" />
+      <submit-button text="Atualizar pessoa" />
     </div>
   </form>
 </template>
@@ -82,9 +90,12 @@ import EmailInput from "./form-parts/EmailInput.vue";
 import ToggleInput from "./form-parts/ToggleInput.vue";
 import SubmitButton from "./form-parts/SubmitButton.vue";
 
-import { axios } from 'axios';
+import { axios } from "axios";
 
 export default {
+  props: {
+    record: Object,
+  },
   components: {
     TextInput,
     EmailInput,
@@ -92,75 +103,55 @@ export default {
     SubmitButton,
   },
 
-  data() {
-    return {
-      form: {
-        firstName: "",
-        lastName: "",
-        fullName: "",
-        email: "",
-        phone: "",
-        isLegalEntity: false,
-        cpf: "",
-        cnpj: "",
-      },
-    };
-  },
-
   methods: {
     setFirstName(value) {
-      this.form.firstName = value;
+      this.record.firstName = value;
     },
 
     setLastName(value) {
-      this.form.lastName = value;
+      this.record.lastName = value;
     },
 
     setEmail(value) {
-      this.form.email = value;
+      this.record.email = value;
     },
 
     setPhone(value) {
-      this.form.phone = value;
+      this.record.phone = value;
     },
 
     setIsLegalEntity(value) {
-      this.form.isLegalEntity = value;
+      this.record.isLegalEntity = value;
     },
 
     setCNPJ(value) {
-      this.form.cnpj = value;
+      this.record.cnpj = value;
     },
 
     setCPF(value) {
-      this.form.cpf = value;
+      this.record.cpf = value;
     },
 
     submitForm(event) {
-      this.$emit('submit:new_register', this.form);
-      this.clearForm(event);
-    },
-
-    clearForm(event) {
+      this.$emit("submit:update_register", this.record);
       event.target.reset();
-      this.form = {}
-    }
+    },
   },
 
   computed: {
     isLegalEntity() {
-      return this.form.isLegalEntity;
+      return this.record.isLegalEntity;
     },
 
     fullName() {
-      const fullName = `${this.form.firstName} ${this.form.lastName}`;
+      const fullName = `${this.record.firstName} ${this.record.lastName}`;
       return fullName;
     },
   },
 
   watch: {
     fullName(val) {
-      this.form.fullName = val;
+      this.record.fullName = val;
     },
   },
 };
