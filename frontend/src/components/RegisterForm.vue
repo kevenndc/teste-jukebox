@@ -9,7 +9,7 @@
         name="first_name"
         label="Nome"
         :required="true"
-        @update:first_name="setFirstName"
+        @update:first_name="setNome"
       />
       <!-- /Nome -->
 
@@ -18,7 +18,7 @@
         name="last_name"
         label="Sobrenome"
         :required="true"
-        @update:last_name="setLastName"
+        @update:last_name="setSobrenome"
       />
       <!-- /Sobrenome -->
     </div>
@@ -30,11 +30,11 @@
 
       <!-- Telefone -->
       <text-input
-        name="phone"
+        name="telefone"
         label="Telefone"
         :required="true"
         mask="(##) #####-####"
-        @update:phone="setPhone"
+        @update:telefone="setTelefone"
       />
       <!-- /Telefone -->
     </div>
@@ -44,13 +44,13 @@
       <toggle-input
         name="legal_entity"
         label="É Pessoa Jurídica?"
-        @update:legal_entity="setIsLegalEntity"
+        @update:legal_entity="setPessoaJuridica"
       />
       <!-- /É pessoa jurídica? -->
 
       <!-- CPF -->
       <text-input
-        v-if="!isLegalEntity"
+        v-if="!pessoaJuridica"
         name="cpf"
         label="CPF"
         :required="true"
@@ -61,7 +61,7 @@
 
       <!-- CNPJ -->
       <text-input
-        v-if="isLegalEntity"
+        v-if="pessoaJuridica"
         name="cnpj"
         label="CNPJ"
         :required="true"
@@ -82,8 +82,6 @@ import EmailInput from "./form-parts/EmailInput.vue";
 import ToggleInput from "./form-parts/ToggleInput.vue";
 import SubmitButton from "./form-parts/SubmitButton.vue";
 
-import { axios } from 'axios';
-
 export default {
   components: {
     TextInput,
@@ -95,12 +93,12 @@ export default {
   data() {
     return {
       form: {
-        firstName: "",
-        lastName: "",
-        fullName: "",
+        nome: "",
+        sobrenome: "",
+        nome_completo: "",
         email: "",
-        phone: "",
-        isLegalEntity: false,
+        telefone: "",
+        pessoa_juridica: false,
         cpf: "",
         cnpj: "",
       },
@@ -108,24 +106,24 @@ export default {
   },
 
   methods: {
-    setFirstName(value) {
-      this.form.firstName = value;
+    setNome(value) {
+      this.form.nome = value;
     },
 
-    setLastName(value) {
-      this.form.lastName = value;
+    setSobrenome(value) {
+      this.form.sobrenome = value;
     },
 
     setEmail(value) {
       this.form.email = value;
     },
 
-    setPhone(value) {
-      this.form.phone = value;
+    setTelefone(value) {
+      this.form.telefone = value;
     },
 
-    setIsLegalEntity(value) {
-      this.form.isLegalEntity = value;
+    setPessoaJuridica(value) {
+      this.form.pessoa_juridica = value;
     },
 
     setCNPJ(value) {
@@ -148,19 +146,19 @@ export default {
   },
 
   computed: {
-    isLegalEntity() {
-      return this.form.isLegalEntity;
+    pessoaJuridica() {
+      return this.form.pessoa_juridica;
     },
 
-    fullName() {
-      const fullName = `${this.form.firstName} ${this.form.lastName}`;
-      return fullName;
+    nomeCompleto() {
+      const nomeCompleto = `${this.form.nome} ${this.form.sobrenome}`;
+      return nomeCompleto;
     },
   },
 
   watch: {
-    fullName(val) {
-      this.form.fullName = val;
+    nomeCompleto(val) {
+      this.form.nome_completo = val;
     },
   },
 };

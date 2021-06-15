@@ -13,13 +13,13 @@
           :key="index"
           class="border-b border-gray-500 last:border-0"
         >
-          <td class="p-5 w-2/6">{{ record.fullName }}</td>
+          <td class="p-5 w-2/6">{{ record.nome_completo }}</td>
           <td class="p-5 w-2/6">{{ record.email }}</td>
           <td class="p-5 w-1/6">
             <div class="flex justify-between mx-auto">
               <span
                 class="flex flex-col items-center text-red-500 cursor-pointer"
-                @click="$emit('delete:record', index)"
+                @click="$emit('delete:record', record)"
               >
                 <TrashIcon class="w-5 h-5" />
                 Excluir

@@ -20,6 +20,19 @@
 import RegisterForm from "./components/RegisterForm.vue";
 import IndexTable from "./components/IndexTable.vue";
 import UpdateForm from "./components/UpdateForm.vue";
+import axios from "axios";
+
+const http = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+  withCredentials: false,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  },
+});
+
+// MUDE PARA TRUE PARA USAR A INTEGRAÇÃO COM O LARAVEL
+const useAPI = false;
 
 export default {
   components: { RegisterForm, IndexTable, UpdateForm },
@@ -32,18 +45,63 @@ export default {
     };
   },
 
+  mounted() {
+    if (useAPI) {
+      http
+        .get("/api/pessoas")
+        .then((result) => {
+          this.records = result.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    }
+  },
+
   methods: {
     saveData(form) {
+      if (useAPI) {
+        return http
+          .post("/api/pessoas", form)
+          .then((result) => {
+            this.records = result.data;
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+      }
+
       this.records.push(form);
     },
 
     updateData(record) {
+      if (useAPI) {
+        return http
+          .put(`/api/pessoas/${record.id}`, record)
+          .then(result => {
+            this.records = result.data;
+            this.isUpdating = false;
+          })
+          .catch(error => {
+            console.log(error.response);
+          })
+      }
       this.records[record.index] = record;
       this.isUpdating = false;
     },
 
-    deleteRecord(index) {
-      this.records = this.records.filter((record, i) => i !== index);
+    deleteRecord(record) {
+      if (useAPI) {
+        return http
+          .delete(`/api/pessoas/${record.id}`, record)
+          .then(result => {
+            this.records = result.data;
+          })
+          .catch(error => {
+            console.log(error.response);
+          })
+      }
+      this.records = this.records.filter((record) => record !== record);
     },
 
     showUpdateForm(index) {

@@ -6,8 +6,8 @@
         name="first_name"
         label="Nome"
         :required="true"
-        :value="record.firstName"
-        @update:first_name="setFirstName"
+        :value="record.nome"
+        @update:first_name="setNome"
       />
       <!-- /Nome -->
 
@@ -16,8 +16,8 @@
         name="last_name"
         label="Sobrenome"
         :required="true"
-        :value="record.lastName"
-        @update:last_name="setLastName"
+        :value="record.sobrenome"
+        @update:last_name="setSobrenome"
       />
       <!-- /Sobrenome -->
     </div>
@@ -34,12 +34,12 @@
 
       <!-- Telefone -->
       <text-input
-        name="phone"
+        name="telefone"
         label="Telefone"
         :required="true"
-        :value="record.phone"
+        :value="record.telefone"
         mask="(##) #####-####"
-        @update:phone="setPhone"
+        @update:telefone="setTelefone"
       />
       <!-- /Telefone -->
     </div>
@@ -49,32 +49,32 @@
       <toggle-input
         name="legal_entity"
         label="É Pessoa Jurídica?"
-        :value="record.isLegalEntity"
-        @update:legal_entity="setIsLegalEntity"
+        :value="Boolean(record.pessoa_juridica)"
+        @update:legal_entity="setPessoaJuridica"
       />
       <!-- /É pessoa jurídica? -->
 
       <!-- CPF -->
       <text-input
-        v-if="!isLegalEntity"
+        v-if="!pessoaJuridica"
         name="cpf"
         label="CPF"
         :required="true"
         :value="record.cpf"
         mask="###.###.###-##"
-        @update:phone="setCPF"
+        @update:cpf="setCPF"
       />
       <!-- /CPF -->
 
       <!-- CNPJ -->
       <text-input
-        v-if="isLegalEntity"
+        v-if="pessoaJuridica"
         name="cnpj"
         label="CNPJ"
         :required="true"
         :value="record.cnpj"
         mask="##.###.###/####-##"
-        @update:phone="setCNPJ"
+        @update:cnpj="setCNPJ"
       />
       <!-- CNPJ -->
     </div>
@@ -90,8 +90,6 @@ import EmailInput from "./form-parts/EmailInput.vue";
 import ToggleInput from "./form-parts/ToggleInput.vue";
 import SubmitButton from "./form-parts/SubmitButton.vue";
 
-import { axios } from "axios";
-
 export default {
   props: {
     record: Object,
@@ -104,24 +102,24 @@ export default {
   },
 
   methods: {
-    setFirstName(value) {
-      this.record.firstName = value;
+    setNome(value) {
+      this.record.nome = value;
     },
 
-    setLastName(value) {
-      this.record.lastName = value;
+    setSobrenome(value) {
+      this.record.sobrenome = value;
     },
 
     setEmail(value) {
       this.record.email = value;
     },
 
-    setPhone(value) {
-      this.record.phone = value;
+    setTelefone(value) {
+      this.record.telefone = value;
     },
 
-    setIsLegalEntity(value) {
-      this.record.isLegalEntity = value;
+    setPessoaJuridica(value) {
+      this.record.pessoa_juridica = value;
     },
 
     setCNPJ(value) {
@@ -139,19 +137,19 @@ export default {
   },
 
   computed: {
-    isLegalEntity() {
-      return this.record.isLegalEntity;
+    pessoaJuridica() {
+      return this.record.pessoa_juridica;
     },
 
-    fullName() {
-      const fullName = `${this.record.firstName} ${this.record.lastName}`;
-      return fullName;
+    nomeCompleto() {
+      const nomeCompleto = `${this.record.nome} ${this.record.sobrenome}`;
+      return nomeCompleto;
     },
   },
 
   watch: {
-    fullName(val) {
-      this.record.fullName = val;
+    nomeCompleto(val) {
+      this.record.nome_completo = val;
     },
   },
 };
