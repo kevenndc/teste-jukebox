@@ -1,5 +1,9 @@
 <template>
-  <common-form :entity="entity" @submit:form="submitNewEntity" />
+  <common-form
+    submitLabel="Cadastrar Pessoa"
+    :entity="entity"
+    @submit:form="submitNewEntity"
+  />
 </template>
 <script>
 // Componentes
@@ -8,18 +12,18 @@ import Entity from "../../models/Entity";
 
 export default {
   components: {
-    CommonForm
+    CommonForm,
   },
 
   data() {
     return {
-      entity: Entity.emptyEntity()
+      entity: Entity.emptyEntity(),
     };
   },
 
   methods: {
     submitNewEntity(event) {
-      this.$emit('submit:new_entity', this.entity);
+      this.$emit("submit:new_entity", this.entity);
     },
   },
 };

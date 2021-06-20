@@ -71,7 +71,7 @@
       <!-- CNPJ -->
     </div>
     <div class="text-right mt-10">
-      <submit-button text="Cadastrar pessoa" />
+      <submit-button :text="submitLabel" />
     </div>
   </form>
 </template>
@@ -91,7 +91,8 @@ export default {
   },
 
   props: {
-      entity: Entity
+      entity: Entity,
+      submitLabel: String,
   },
 
   methods: {

@@ -1,5 +1,9 @@
 <template>
-  <common-form :entity="entity" @submit:form="submitUpdatEntity" />
+  <common-form
+    submitLabel="Atualizar pessoa"
+    :entity="entity"
+    @submit:form="submitUpdatEntity"
+  />
 </template>
 <script>
 // Componentes
@@ -8,16 +12,16 @@ import Entity from "../../models/Entity";
 
 export default {
   components: {
-    CommonForm
+    CommonForm,
   },
 
   props: {
-    entity: Entity
+    entity: Entity,
   },
 
   methods: {
     submitUpdatEntity(event) {
-      this.$emit('submit:update_entity', this.entity);
+      this.$emit("submit:update_entity", this.entity);
     },
   },
 };

@@ -24,7 +24,7 @@ import Entity from "./models/Entity";
 
 
 // MUDE PARA TRUE PARA USAR A INTEGRAÇÃO COM O LARAVEL
-const useAPI = false;
+const useAPI = true;
 
 export default {
   components: { RegisterForm, IndexTable, UpdateForm },
@@ -86,7 +86,7 @@ export default {
               console.log(error.response);
             })
       }
-      
+
       this.entities[entity.index] = entity;
       this.isUpdating = false;
     },
