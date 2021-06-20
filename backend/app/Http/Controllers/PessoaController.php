@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePessoaRequest;
 use App\Models\Pessoa;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PessoaController extends Controller
 {
@@ -31,7 +32,7 @@ class PessoaController extends Controller
             die($e->getMessage());
         }
         $pessoa = Pessoa::create($validated);
-        return Pessoa::orderBy('created_at', 'desc')->get()->toJson();
+        return $pessoa->toJson();
     }
 
     // atualiza uma pessoa e retorna todas as pessoas cadastradas
@@ -45,7 +46,7 @@ class PessoaController extends Controller
         }
         $pessoa = Pessoa::findOrFail($id);
         $pessoa->update($validated);
-        return Pessoa::orderBy('created_at', 'desc')->get()->toJson();
+        return $pessoa->toJson();
     }
 
     // remove uma pessoa e retorna as pessoas cadastradas
@@ -53,6 +54,6 @@ class PessoaController extends Controller
     {
         $pessoa = Pessoa::findOrFail($id);
         $pessoa->delete();
-        return Pessoa::orderBy('created_at', 'desc')->get()->toJson();
+        return response()->json(['id' => $id, Response::HTTP_OK]);
     }
 }

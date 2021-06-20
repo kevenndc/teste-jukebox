@@ -1,14 +1,14 @@
 <template>
   <div class="relative border-b-2 focus-within:border-blue-500">
     <input
+      class="block w-full appearance-none focus:outline-none bg-transparent"
       type="email"
+      placeholder=" "
       :name="name"
       :id="name"
       :required="required"
-      placeholder=" "
-      v-model="value"
-      @input="$emit(`update:${name}`, $event.target.value)"
-      class="block w-full appearance-none focus:outline-none bg-transparent"
+      :value="modelValue"
+      @input="$emit(`update:modelValue`, $event.target.value)"
     />
     <label :for="name" class="absolute top-0 -z-1 duration-300 origin-0">
       {{ label }}
@@ -21,7 +21,7 @@ export default {
     name: String,
     label: String,
     required: Boolean,
-    value: String,
+    modelValue: String,
   },
 }
 </script>
