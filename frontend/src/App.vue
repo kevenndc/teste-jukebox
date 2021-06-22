@@ -1,11 +1,11 @@
 <template>
   <div class="container mx-auto">
     <h1 class="text-2xl text-center mb-10">Cadastro de pessoas</h1>
-    <register-form v-if="!isUpdating" @submit:new_entity="saveData" />
+    <register-form v-if="!isUpdating" @update:new_entity="saveData" />
     <update-form
       v-if="isUpdating"
       :entity="entity"
-      @submit:update_entity="updateData"
+      @update:update_entity="updateData"
     />
     <index-table
       v-if="entities.length > 0 && !isUpdating"
@@ -24,7 +24,7 @@ import Entity from "./models/Entity";
 
 
 // MUDE PARA TRUE PARA USAR A INTEGRAÇÃO COM O LARAVEL
-const useAPI = true;
+const useAPI = false;
 
 export default {
   components: { RegisterForm, IndexTable, UpdateForm },
@@ -54,39 +54,19 @@ export default {
 
   methods: {
     saveData(entity) {
-      if (useAPI) {
-        return this.axios
-          .post("/api/pessoas", entity.toJSON())
-            .then((result) => {
-              this.entities.unshift(Entity.fromResponse(result.data));
-            })
-            .catch((error) => {
-              console.log(error.response);
-            });
-      }
-
-      this.entities.push(entity);
+      this.entities.unshift(entity);
     },
 
     updateData(entity) {
-      if (useAPI) {
-        return this.axios
-          .put(`/api/pessoas/${entity.id}`, entity.toJSON())
-            .then(result => {
 
-              this.entities.map(entity => {
-                if (entity.id === result.data.id) {
-                  return Entity.fromResponse(result.data)
-                }
-              });
-
-              this.isUpdating = false;
-            })
-            .catch(error => {
-              console.log(error.response);
-            })
+      if (this.shouldUseAPI) {
+        return this.entities.map(item => {
+          if (item.id === entity.id) {
+            return entity;
+          }
+        });
       }
-
+      
       this.entities[entity.index] = entity;
       this.isUpdating = false;
     },

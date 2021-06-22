@@ -22,8 +22,23 @@ export default {
   },
 
   methods: {
-    submitNewEntity(event) {
-      this.$emit("submit:new_entity", this.entity);
+    submitNewEntity() {
+
+      let newEntity = this.entity;
+
+        if (this.shouldUseAPI) {
+          console.log('entrou')
+          return this.axios
+            .post("/api/pessoas", this.entity.toJSON())
+              .then((result) => {
+                newEntity = Entity.fromResponse(result.data);
+              })
+              .catch((error) => {
+                console.log(error.response);
+              });
+        }
+
+        this.$emit('update:new_entity', newEntity);
     },
   },
 };

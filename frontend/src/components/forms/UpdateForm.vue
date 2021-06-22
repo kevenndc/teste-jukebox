@@ -20,8 +20,22 @@ export default {
   },
 
   methods: {
-    submitUpdatEntity(event) {
-      this.$emit("submit:update_entity", this.entity);
+    submitUpdatEntity() {
+
+      let updatedEntity = this.entity;
+
+      if (this.shoudUseAPI) {
+        return this.axios
+          .put(`/api/pessoas/${this.entity.id}`, this.entity.toJSON())
+            .then(result => {
+                updatedEntity =  Entity.fromResponse(result.data);
+            })
+            .catch(error => {
+              console.log(error.response);
+            });
+      }
+
+      this.$emit("update:update_entity", updatedEntity);
     },
   },
 };
