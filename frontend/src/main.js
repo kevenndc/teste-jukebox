@@ -1,5 +1,6 @@
 import './index.css'
 import { createApp } from 'vue'
+import router from './routes';
 import App from './App.vue'
 import { VueMaskDirective } from 'v-mask';
 import axios from 'axios';
@@ -22,8 +23,11 @@ const vMaskV3 = {
     unmounted: vMaskV2.unbind
 };
 
+const shouldUseAPI = false;
+
 const app = createApp(App).directive('mask', vMaskV3);
     
 app.config.globalProperties.axios = axiosInstance;
+app.config.globalProperties.shouldUseAPI = shouldUseAPI;
     
-app.mount('#app');
+app.use(router).mount('#app');
