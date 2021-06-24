@@ -9,7 +9,7 @@ import IndexTable from './components/IndexTable.vue';
 const routes = [
     { path: '/', component: App },
     { path: '/create', component: RegisterForm },
-    { path: '/update', component: UpdateForm },
+    { path: '/update/:id', component: UpdateForm },
     { path: '/index', component: IndexTable },
 ];
 

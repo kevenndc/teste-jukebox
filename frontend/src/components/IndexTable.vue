@@ -9,24 +9,24 @@
       </thead>
       <tbody>
         <tr
-          v-for="(entity, index) in entities"
-          :key="index"
+          v-for="person in persons"
+          :key="person.id"
           class="border-b border-gray-500 last:border-0"
         >
-          <td class="p-5 w-2/6">{{ entity.fullName }}</td>
-          <td class="p-5 w-2/6">{{ entity.email }}</td>
+          <td class="p-5 w-2/6">{{ person.fullName }}</td>
+          <td class="p-5 w-2/6">{{ person.email }}</td>
           <td class="p-5 w-1/6">
             <div class="flex justify-between mx-auto">
               <span
                 class="flex flex-col items-center text-red-500 cursor-pointer"
-                @click="$emit('delete:entity', entity)"
+                @click="removePerson(person.id)"
               >
                 <TrashIcon class="w-5 h-5" />
                 Excluir
               </span>
               <span
                 class="flex flex-col items-center text-blue-500 cursor-pointer"
-                @click="$emit('update:entity', index)"
+                @click="updatePerson(id)"
               >
                 <PencilAltIcon class="w-5 h-5" />
                 Atualizar
@@ -43,8 +43,24 @@ import { TrashIcon, PencilAltIcon } from "@heroicons/vue/solid";
 export default {
   components: { TrashIcon, PencilAltIcon },
 
-  props: {
-    entities: Array,
+  computed: {
+      persons() {
+        return this.$store.state.persons;
+      }
   },
+
+  methods: {
+    removePerson(id) {
+      if(this.shouldUseAPI) {
+        this.$store.dispatch('deletePerson', id);
+      }
+    },
+
+    updatePerson(id) {
+      if(this.shouldUseAPI) {
+        this.$router.push(`/update/${id}`, id);
+      }
+    },
+  }
 };
 </script>

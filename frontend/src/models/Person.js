@@ -1,25 +1,25 @@
-export default class Entity {
+export default class Person {
 
-    // #id;
+    static counter = 0;
 
     constructor(
         id = null,
-        firstName, 
-        lastName, 
-        fullName, 
-        email, 
-        phone, 
-        isLegalEntity, 
-        cpf, 
-        cnpj,
+        firstName = '', 
+        lastName = '', 
+        fullName = '', 
+        email = '', 
+        phone = '', 
+        isLegalPerson = false, 
+        cpf = '', 
+        cnpj = '',
     ) {
-        this._id = id,
+        this._id = id ? id : ++counter;
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
-        this.isLegalEntity = isLegalEntity;
+        this.isLegalPerson = isLegalPerson;
         this.cpf = cpf;
         this.cnpj = cnpj;
     }
@@ -28,12 +28,8 @@ export default class Entity {
         return this._id;
     }
 
-    static emptyEntity() {
-        return new Entity(null, '', '', '', '', '', false, '', '');
-    }
-
     static fromResponse(data) {
-        return new Entity(
+        return new Person(
             data.id,
             data.nome,
             data.sobrenome,
@@ -54,7 +50,7 @@ export default class Entity {
             nome_completo: this.fullName,
             email: this.email,
             telefone: this.phone,
-            pessoa_juridica: this.isLegalEntity,
+            pessoa_juridica: this.isLegalPerson,
             cpf: this.cpf,
             cnpj: this.cnpj,
         });
@@ -67,7 +63,7 @@ export default class Entity {
             fullName: this.fullName ,
             email: this.email,
             phone: this.phone,
-            isLegalEntity: Boolean(this.isLegalEntity),
+            isLegalPerson: Boolean(this.isLegalPerson),
             cpf: this.cpf,
             cnpj: this.cnpj,
         });

@@ -1,14 +1,14 @@
 <template>
   <common-form
     submitLabel="Cadastrar Pessoa"
-    :entity="entity"
-    @submit:form="submitNewEntity"
+    :person="person"
+    @submit:form="submitNewPerson"
   />
 </template>
 <script>
 // Componentes
 import CommonForm from "../forms/CommonForm.vue";
-import Entity from "../../models/Entity";
+import Person from "../../models/Person";
 
 export default {
   components: {
@@ -17,28 +17,18 @@ export default {
 
   data() {
     return {
-      entity: Entity.emptyEntity(),
+      person: new Person(),
     };
   },
 
   methods: {
-    submitNewEntity() {
-
-      let newEntity = this.entity;
+    submitNewPerson() {
 
         if (this.shouldUseAPI) {
-          console.log('entrou')
-          return this.axios
-            .post("/api/pessoas", this.entity.toJSON())
-              .then((result) => {
-                newEntity = Entity.fromResponse(result.data);
-              })
-              .catch((error) => {
-                console.log(error.response);
-              });
+          return this.$store.dispatch('createPerson', this.person);
         }
 
-        this.$emit('update:new_entity', newEntity);
+        this.$store.commit('addPerson', this.person);
     },
   },
 };

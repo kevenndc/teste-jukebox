@@ -1,14 +1,16 @@
 <template>
   <common-form
     submitLabel="Atualizar pessoa"
-    :entity="entity"
-    @submit:form="submitUpdatEntity"
+    :person="person"
+    @submit:form="submitUpdatPerson"
   />
+
+  {{ personId }}
 </template>
 <script>
 // Componentes
 import CommonForm from "../forms/CommonForm.vue";
-import Entity from "../../models/Entity";
+import Person from "../../models/Person";
 
 export default {
   components: {
@@ -16,26 +18,32 @@ export default {
   },
 
   props: {
-    entity: Entity,
+    person: Person,
+  },
+
+  computed: {
+    personId() {
+      return this.$route.params;
+    }
   },
 
   methods: {
-    submitUpdatEntity() {
+    submitUpdatPerson() {
 
-      let updatedEntity = this.entity;
+      let updatedperson = this.person;
 
       if (this.shoudUseAPI) {
         return this.axios
-          .put(`/api/pessoas/${this.entity.id}`, this.entity.toJSON())
+          .put(`/api/pessoas/${this.person.id}`, this.person.toJSON())
             .then(result => {
-                updatedEntity =  Entity.fromResponse(result.data);
+                updatedperson =  person.fromResponse(result.data);
             })
             .catch(error => {
               console.log(error.response);
             });
       }
 
-      this.$emit("update:update_entity", updatedEntity);
+      this.$emit("update:update_person", updatedperson);
     },
   },
 };
