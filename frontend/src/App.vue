@@ -29,13 +29,11 @@
 import { UserAddIcon, UserGroupIcon } from "@heroicons/vue/solid";
 import RegisterForm from "./components/forms/RegisterForm.vue";
 import IndexTable from "./components/IndexTable.vue";
-import UpdateForm from "./components/forms/UpdateForm.vue";
 
 export default {
   components: { 
     RegisterForm, 
     IndexTable, 
-    UpdateForm,
     UserAddIcon,
     UserGroupIcon,
   },

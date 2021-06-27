@@ -2,48 +2,36 @@
   <common-form
     submitLabel="Atualizar pessoa"
     :person="person"
-    @submit:form="submitUpdatPerson"
+    @submit:form="submitUpdatedPerson"
   />
-
-  {{ personId }}
 </template>
 <script>
 // Componentes
 import CommonForm from "../forms/CommonForm.vue";
-import Person from "../../models/Person";
 
 export default {
   components: {
     CommonForm,
   },
 
-  props: {
-    person: Person,
+  beforeRouteUpdate(to, from) {
+    this.person = this.$store.getters.getPersonById(to.params.id);
   },
 
-  computed: {
-    personId() {
-      return this.$route.params;
+  data() {
+    return {
+      person: this.$store.getters.getPersonById(this.$route.params.id),
     }
   },
 
   methods: {
-    submitUpdatPerson() {
-
-      let updatedperson = this.person;
+    submitUpdatedPerson() {
 
       if (this.shoudUseAPI) {
-        return this.axios
-          .put(`/api/pessoas/${this.person.id}`, this.person.toJSON())
-            .then(result => {
-                updatedperson =  person.fromResponse(result.data);
-            })
-            .catch(error => {
-              console.log(error.response);
-            });
+        return this.$store.dispatch('updatePerson', this.person);
       }
 
-      this.$emit("update:update_person", updatedperson);
+      this.$store.commit('updatePerson', this.person);
     },
   },
 };

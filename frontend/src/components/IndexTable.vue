@@ -26,7 +26,7 @@
               </span>
               <span
                 class="flex flex-col items-center text-blue-500 cursor-pointer"
-                @click="updatePerson(id)"
+                @click="updatePerson(person.id)"
               >
                 <PencilAltIcon class="w-5 h-5" />
                 Atualizar
@@ -52,14 +52,14 @@ export default {
   methods: {
     removePerson(id) {
       if(this.shouldUseAPI) {
-        this.$store.dispatch('deletePerson', id);
+        return this.$store.dispatch('deletePerson', id);
       }
+
+      this.$store.commit('removePerson', id);
     },
 
     updatePerson(id) {
-      if(this.shouldUseAPI) {
-        this.$router.push(`/update/${id}`, id);
-      }
+      this.$router.push(`/update/${id}`);
     },
   }
 };

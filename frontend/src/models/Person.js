@@ -13,7 +13,7 @@ export default class Person {
         cpf = '', 
         cnpj = '',
     ) {
-        this._id = id ? id : ++counter;
+        this._id = id ? id : ++Person.counter;
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
@@ -51,19 +51,6 @@ export default class Person {
             email: this.email,
             telefone: this.phone,
             pessoa_juridica: this.isLegalPerson,
-            cpf: this.cpf,
-            cnpj: this.cnpj,
-        });
-    }
-    
-    toString() {
-        return JSON.stringify({
-            firstName: this.firstName,
-            lastName: this.lastName,
-            fullName: this.fullName ,
-            email: this.email,
-            phone: this.phone,
-            isLegalPerson: Boolean(this.isLegalPerson),
             cpf: this.cpf,
             cnpj: this.cnpj,
         });

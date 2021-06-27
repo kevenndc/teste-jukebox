@@ -23,12 +23,14 @@ export default {
 
   methods: {
     submitNewPerson() {
+      const newPerson = this.person;
+      this.person = new Person();
 
-        if (this.shouldUseAPI) {
-          return this.$store.dispatch('createPerson', this.person);
-        }
+      if (this.shouldUseAPI) {
+        return this.$store.dispatch('createPerson', newPerson);
+      }
 
-        this.$store.commit('addPerson', this.person);
+      this.$store.commit('addPerson', newPerson);
     },
   },
 };

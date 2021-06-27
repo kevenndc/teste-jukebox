@@ -5,13 +5,13 @@ import axios from '../api.js';
 
 export default createStore({
     state: {
-        persons: Array,
+        persons: [],
     },
 
     getters: {
         persons: state => state.persons,
         getPersonById: state => id => {
-            return state.persons.find(person => person.id === id);
+            return state.persons.find(person => person.id == id);
         }
     },
 
@@ -24,8 +24,10 @@ export default createStore({
             state.persons.unshift(person);
         },
 
-        updatePerson(state, person) {
-
+        updatePerson(state, updatedPerson) {
+            state.persons.map(person => {
+                if (person.id == updatedPerson.id) return updatedPerson;
+            });
         },
 
         removePerson(state, id) {
@@ -60,7 +62,7 @@ export default createStore({
 
         updatePerson({ commit }, person) {
             axios.put(`/api/pessoas/${this.person.id}`, person.toJSON())
-                .then(reponse => {
+                .then(response => {
                     commit('updatePerson', Person.fromResponse(response.data));
                 })
                 .catch(error => {

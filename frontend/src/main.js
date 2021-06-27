@@ -13,7 +13,7 @@ const vMaskV3 = {
     unmounted: vMaskV2.unbind
 };
 
-const shouldUseAPI = true;
+const shouldUseAPI = false;
 
 const app = createApp(App).directive('mask', vMaskV3);
     
